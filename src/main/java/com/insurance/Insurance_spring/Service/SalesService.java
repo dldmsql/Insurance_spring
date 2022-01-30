@@ -94,20 +94,21 @@ public class SalesService {
         return contractList;
     }
 
-    // 연장 혹은 해지
-    public void updateContract( Long id, Long due ){
+    // 연장
+    public Contract updateContract( Long id, Long due ){
         Optional<Contract> optionalContract = contractRepository.findById(id);
         if(!optionalContract.isPresent()){
             throw new EntityNotFoundException(
                     "Contract not present in the database"
             );
         }
-        if( due == 0 ){
-            contractRepository.deleteById(id);
-        } else {
             Contract contract = optionalContract.get();
             contract.setDueOn(contract.getDueOn().plus(due, ChronoUnit.YEARS));
             contractRepository.save(contract);
-        }
+            return contract;
+    }
+    // 해지
+    public void deleteContract ( Long id ){
+        contractRepository.deleteById(id);
     }
 }

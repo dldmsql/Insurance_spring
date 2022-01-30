@@ -41,10 +41,10 @@ public class DevelopService {
 
     // 미승인 상품 리스트
     public List<Insurance> readInsurances(){
-        return insuranceRepository.findByInsurancePermitted_Nonapprove();
+        return insuranceRepository.findByInsurancePermitted(InsurancePermitted.nonapprove);
     }
     // 상품 인가
-    public void updateInsurance(Long id){
+    public Insurance updateInsurance(Long id){
         Optional<Insurance> optionalInsurance = insuranceRepository.findById(id);
         if (!optionalInsurance.isPresent()){
             throw new EntityNotFoundException(
@@ -54,5 +54,6 @@ public class DevelopService {
         Insurance insurance = optionalInsurance.get();
         insurance.setInsurancePermitted(InsurancePermitted.approve);
         insuranceRepository.save(insurance);
+        return insurance;
     }
 }
