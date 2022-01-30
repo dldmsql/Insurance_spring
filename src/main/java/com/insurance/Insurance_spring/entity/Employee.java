@@ -17,6 +17,8 @@ public class Employee {
     private Long id;
     private String firstName;
     private String lastName;
+    private Long pw;
+
     @Enumerated(EnumType.STRING)
     private EmployeeDepart employeeDepart; // 담당 부서
 

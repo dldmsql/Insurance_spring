@@ -1,6 +1,6 @@
 package com.insurance.Insurance_spring.controller;
 
-import com.insurance.Insurance_spring.Service.SalesService;
+import com.insurance.Insurance_spring.service.SalesService;
 import com.insurance.Insurance_spring.entity.Contract;
 import com.insurance.Insurance_spring.entity.Customer;
 import com.insurance.Insurance_spring.entity.Insurance;

@@ -1,4 +1,4 @@
-package com.insurance.Insurance_spring.Service;
+package com.insurance.Insurance_spring.service;
 
 import com.insurance.Insurance_spring.entity.*;
 import com.insurance.Insurance_spring.repository.*;

@@ -1,6 +1,6 @@
 package com.insurance.Insurance_spring.controller;
 
-import com.insurance.Insurance_spring.Service.DevelopService;
+import com.insurance.Insurance_spring.service.DevelopService;
 import com.insurance.Insurance_spring.entity.Insurance;
 import com.insurance.Insurance_spring.request.InsuranceCreationRequest;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +16,6 @@ import java.util.List;
 public class DevelopController {
     private final DevelopService developService;
 
-    @GetMapping("/home")
-    public List<String> home(){
-        return Arrays.asList("안녕하세요", "this page is develop part in project.");
-
-    }
     @PostMapping("/insurance")
     public ResponseEntity createInsurance(@RequestBody InsuranceCreationRequest request){
             return ResponseEntity.ok(developService.createInsurance(request));

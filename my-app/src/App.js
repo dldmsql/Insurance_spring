@@ -1,40 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-import {useEffect, useState} from "react";
+import React, { Component } from "react";
+import axios from "axios";
 
-function App() {
-  const [message, setMessage] = useState([]);
-  useEffect(() => {
-    fetch("/api/develop/home")
-        .then((response) => {
-          return response.json();
-        })
-        .then(function (data) {
-          setMessage(data);
-        });
-  }, []);
+class App extends Component {
+    state = {
+        loading: false,
+        ItemList: []  // 비어있는 배열
+    };
+    // APP.js 컴포넌트의 최종 보여지는 render값 정의
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <ul>
-          {message.map((text,index) => <li key={`${index}-${text}`}>{text}</li> )}
-        </ul>
-      </header>
-    </div>
-  );
+    render() {
+        return (
+            <div>
+                <Listpage />
+            </div>
+        );
+    }
 }
-
 export default App;

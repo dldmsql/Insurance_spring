@@ -1,4 +1,4 @@
-package com.insurance.Insurance_spring.Service;
+package com.insurance.Insurance_spring.service;
 
 import com.insurance.Insurance_spring.entity.*;
 import com.insurance.Insurance_spring.repository.*;
@@ -6,7 +6,6 @@ import com.insurance.Insurance_spring.request.AccidentRequest;
 import com.insurance.Insurance_spring.request.RewardRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
