@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,5 +30,9 @@ public class MainService {
             return "Success";
         }
         return "Failed";
+    }
+
+    public List<Employee> readEmployees() {
+        return (List<Employee>) employeeRepository.findAll();
     }
 }

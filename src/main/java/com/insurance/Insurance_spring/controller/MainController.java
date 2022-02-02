@@ -11,11 +11,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/main")
 @RequiredArgsConstructor
 public class MainController {
     private final MainService mainService;
+
+    @GetMapping
+    public ResponseEntity<List<Employee>> hello() {
+        return ResponseEntity.ok(mainService.readEmployees());
+    }
 
     @PostMapping ("/signup")
     public ResponseEntity createEmployee(@RequestBody EmployeeCreationRequest request){
