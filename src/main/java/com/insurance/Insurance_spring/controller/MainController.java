@@ -21,7 +21,7 @@ public class MainController {
     private final MainService mainService;
 
     @GetMapping
-    public ResponseEntity<List<Employee>> hello() {
+    public ResponseEntity<List<Employee>> readEmployees() {
         return ResponseEntity.ok(mainService.readEmployees());
     }
 
@@ -31,9 +31,6 @@ public class MainController {
     }
     @PostMapping("/login")
     public ResponseEntity readEmployee(@RequestBody EmployeeLoginRequest request){
-      if(mainService.readEmployee(request).equals("Success")){
-          return new ResponseEntity(HttpStatus.OK);
-      }
-      return new ResponseEntity(HttpStatus.BAD_REQUEST);
+      return ResponseEntity.ok(mainService.readEmployee(request));
     }
 }

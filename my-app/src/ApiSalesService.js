@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const USER_API_BASE_URL = "http://localhost:8080/api/main";
+const USER_API_BASE_URL = "http://localhost:8080/api/develop";
 
-class ApiService{
+class ApiSalesService{
     fetchUsers(){
         return axios.get(USER_API_BASE_URL);
     }
@@ -20,4 +20,4 @@ class ApiService{
     }
 
 }
-export default new ApiService();
+export default new ApiSalesService();

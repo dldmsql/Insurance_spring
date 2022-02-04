@@ -1,38 +1,19 @@
 import React, {Component} from "react";
-import ApiService from "../../ApiService";
+import ApiService from "../../ApiMainService";
 import {Button, TextField, Typography} from "@material-ui/core";
 
-class EditUserComponent extends Component{
+class AddUserComponent extends Component{
     constructor(props) {
         super(props);
 
         this.state =
             {
+                password: '',
                 firstName: '',
                 lastName:'',
                 employeeDepart:'',
                 message: null
             }
-    }
-
-    componentDidMount() {
-        this.loadUser();
-    }
-
-    loadUser = () => {
-        ApiService.fetchUserByID(window.localStorage.getItem("userID"))
-            .then(res => {
-                let user = res.data;
-                this.setState({
-                    id: user.id,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    employeeDepart: user.employeeDepart
-                })
-            })
-            .catch(err => {
-                console.log('loadUSer() 에러 ', err);
-            });
     }
 
     onChange = (e ) => {
@@ -45,17 +26,16 @@ class EditUserComponent extends Component{
         e.preventDefault();
 
         let user = {
-            id: this.state.id,
             password: this.state.password,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             employeeDepart: this.state.employeeDepart
         }
 
-        ApiService.editUser(user)
+        ApiService.addUser(user)
             .then(res => {
                 this.setState({
-                    message: user.lastName + '님의 정보가 수정되었습니다..'
+                    message: user.lastName + '님이 성공적으로 등록되었습ㄴ디ㅏ.'
                 })
                 console.log(this.state.message);
                 this.props.history.push('/users');
@@ -68,17 +48,21 @@ class EditUserComponent extends Component{
     render() {
         return (
             <div>
-                <Typography variant="h4" style={style}>Edit User</Typography>
-                <form>
+                <Typography variant="h4" style={style}>Add User</Typography>
+                <form style={formContainer}>
 
-                    <TextField placeholder="please Edit your firstName" name="firstName" value={this.state.firstName}
+                        <TextField type="password" placeholder="please input your password" name="password"
+                                  fullWidth margin="normal" value={this.state.password}  onChange={this.onChange}/>
+
+
+                        <TextField placeholder="please input your firstName" name="firstName" value={this.state.firstName}
+                                   fullWidth margin="normal" onChange={this.onChange}/>
+
+
+                        <TextField placeholder="please input your lastName" name="lastName" value={this.state.lastName}
                                fullWidth margin="normal" onChange={this.onChange}/>
 
-
-                    <TextField placeholder="please Edit your lastName" name="lastName" value={this.state.lastName}
-                               fullWidth margin="normal" onChange={this.onChange}/>
-
-                    <TextField placeholder="please Edit your employeeDepart" name="employeeDepart" value={this.state.employeeDepart}
+                        <TextField placeholder="please input your employeeDepart" name="employeeDepart" value={this.state.employeeDepart}
                                fullWidth margin="normal" onChange={this.onChange}/>
 
                     <Button variant="contained" color="primary" onChange={this.saveUser}>Save</Button>
@@ -88,8 +72,12 @@ class EditUserComponent extends Component{
     }
 }
 
+const formContainer = {
+    display: 'flex',
+    flexFlow: 'row wrap'
+}
 const style = {
     display: 'flex',
     justifyContent : 'center'
 }
-export default EditUserComponent;
+export default AddUserComponent;

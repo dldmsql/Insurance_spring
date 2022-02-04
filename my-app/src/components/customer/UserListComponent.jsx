@@ -1,8 +1,9 @@
 import React, {Component} from "react";
-import ApiService from "../../ApiService";
+import ApiService from "../../ApiMainService";
 import {Button, Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ApiDevelopService from "../../ApiDevelopService";
 
 class UserListComponent extends Component{
     constructor(props) {
@@ -17,7 +18,7 @@ class UserListComponent extends Component{
         this.reloadUserList();
     }
     reloadUserList = () => {
-        ApiService.fetchUsers()
+        ApiDevelopService.fetchUsers()
             .then( res => {
                 this.setState({
                     users: res.data
@@ -28,7 +29,7 @@ class UserListComponent extends Component{
             })
     }
     deleteUser = (userID) => {
-        ApiService.deleteUser(userID)
+        ApiDevelopService.deleteUser(userID)
             .then( res => {
                 this.setState({
                         message: 'User Deleted Successfully.'
@@ -43,7 +44,7 @@ class UserListComponent extends Component{
             })
     }
     editUser = (ID) => {
-        Window.localStorage.setItem("ID", ID);
+        window.localStorage.setItem("ID", ID);
         this.props.history.push('/edit-user');
     }
     addUser = () => {
@@ -70,6 +71,7 @@ class UserListComponent extends Component{
                     <TableBody>
                     {this.state.users.map ( user =>
                     <TableRow key={user.id}>
+                        <TableCell>{user.id}</TableCell>
                         <TableCell>{user.firstName}</TableCell>
                         <TableCell align="right">{user.lastName}</TableCell>
                         <TableCell align="right">{user.employeeDepart}</TableCell>

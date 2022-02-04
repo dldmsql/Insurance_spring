@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class EmployeeLoginRequest {
-    private Long employeeId;
+    private Long id;
     private Long pw;
 }

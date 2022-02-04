@@ -24,12 +24,9 @@ public class MainService {
         return employeeRepository.save(employee);
     }
     // 로그인
-    public String readEmployee(EmployeeLoginRequest request){
-        Optional<Employee> employee = employeeRepository.findById(request.getEmployeeId());
-        if(employee.get().getPw() == request.getPw() ){
-            return "Success";
-        }
-        return "Failed";
+    public Employee readEmployee(EmployeeLoginRequest request){
+        Optional<Employee> employee = employeeRepository.findByIdAndPw(request.getId(), request.getPw());
+        return employee.get();
     }
 
     public List<Employee> readEmployees() {
