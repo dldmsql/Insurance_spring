@@ -1,5 +1,6 @@
 package com.insurance.Insurance_spring.controller;
 
+import com.insurance.Insurance_spring.request.CustomerCreationRequest;
 import com.insurance.Insurance_spring.service.SalesService;
 import com.insurance.Insurance_spring.entity.Contract;
 import com.insurance.Insurance_spring.entity.Customer;
@@ -22,9 +23,13 @@ public class SalesController {
     public ResponseEntity readCustomers(){
         return ResponseEntity.ok(salesService.readCustomers());
     }
-    @GetMapping("/customer/{customerId}")
-    public ResponseEntity<Customer> readCustomer(@PathVariable Long customerId){
-        return ResponseEntity.ok(salesService.readCustomer(customerId));
+    @GetMapping("/customer/{id}")
+    public ResponseEntity<Customer> readCustomer(@PathVariable Long id){
+        return ResponseEntity.ok(salesService.readCustomer(id));
+    }
+    @PostMapping("/customer")
+    public ResponseEntity createCustomer(@RequestBody  CustomerCreationRequest request){
+        return ResponseEntity.ok(salesService.createCustomer(request));
     }
     @PostMapping("/insurance")
     public ResponseEntity<List<Insurance>> readInsurances(@RequestBody InsuranceReadsRequest request ){

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import ApiService from "../../ApiMainService";
+import ApiService from "../../ApiSalesService";
 import {Button, TextField, Typography} from "@material-ui/core";
 
 class EditUserComponent extends Component{

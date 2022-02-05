@@ -2,9 +2,11 @@ package com.insurance.Insurance_spring.service;
 
 import com.insurance.Insurance_spring.entity.*;
 import com.insurance.Insurance_spring.repository.*;
+import com.insurance.Insurance_spring.request.CustomerCreationRequest;
 import com.insurance.Insurance_spring.request.InsuranceContractRequest;
 import com.insurance.Insurance_spring.request.InsuranceReadsRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -110,5 +112,12 @@ public class SalesService {
     // 해지
     public void deleteContract ( Long id ){
         contractRepository.deleteById(id);
+    }
+
+    public Customer createCustomer(CustomerCreationRequest request) {
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(request, customer);
+        System.out.println(request.getJob());
+        return customerRepository.save(customer);
     }
 }

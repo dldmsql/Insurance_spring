@@ -1,6 +1,13 @@
 import React, {Component} from "react";
-import ApiService from "../../ApiMainService";
+import ApiService from "../../ApiSalesService";
 import {Button, TextField, Typography} from "@material-ui/core";
+import Select from 'react-select';
+
+const options = [
+    { value: "student", label: "학생" },
+    { value: "officer", label: "사무직" },
+    { value: "driver", label: "운전자" }
+];
 
 class AddUserComponent extends Component{
     constructor(props) {
@@ -8,10 +15,9 @@ class AddUserComponent extends Component{
 
         this.state =
             {
-                password: '',
-                firstName: '',
+                firstName:'',
                 lastName:'',
-                employeeDepart:'',
+                job:'',
                 message: null
             }
     }
@@ -21,24 +27,28 @@ class AddUserComponent extends Component{
             [e.target.name] : e.target.value
         })
     }
+    handleJob = (e) => {
+        this.setState({
+            job: e.target.value
+        });
+        console.log(this.state.job);
+    };
 
     saveUser = (e) => {
         e.preventDefault();
 
         let user = {
-            password: this.state.password,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
-            employeeDepart: this.state.employeeDepart
+            job: this.state.job
         }
-
         ApiService.addUser(user)
             .then(res => {
                 this.setState({
                     message: user.lastName + '님이 성공적으로 등록되었습ㄴ디ㅏ.'
                 })
                 console.log(this.state.message);
-                this.props.history.push('/users');
+                this.props.history.push('/customer');
             })
             .catch( err => {
                 console.log('saveUser() 에러', err);
@@ -49,23 +59,19 @@ class AddUserComponent extends Component{
         return (
             <div>
                 <Typography variant="h4" style={style}>Add User</Typography>
-                <form style={formContainer}>
-
-                        <TextField type="password" placeholder="please input your password" name="password"
-                                  fullWidth margin="normal" value={this.state.password}  onChange={this.onChange}/>
-
+                <form style={formContainer} onSubmit={this.saveUser}>
 
                         <TextField placeholder="please input your firstName" name="firstName" value={this.state.firstName}
                                    fullWidth margin="normal" onChange={this.onChange}/>
 
-
                         <TextField placeholder="please input your lastName" name="lastName" value={this.state.lastName}
                                fullWidth margin="normal" onChange={this.onChange}/>
 
-                        <TextField placeholder="please input your employeeDepart" name="employeeDepart" value={this.state.employeeDepart}
-                               fullWidth margin="normal" onChange={this.onChange}/>
+                    <Select options={options} onChange={this.handleJob} defaultValue={options[1]} />
 
-                    <Button variant="contained" color="primary" onChange={this.saveUser}>Save</Button>
+                    <div>
+                        <Button variant="contained" color="primary" type={"submit"}>Save</Button>
+                    </div>
                 </form>
             </div>
         );

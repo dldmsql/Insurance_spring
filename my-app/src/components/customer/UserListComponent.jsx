@@ -1,9 +1,8 @@
 import React, {Component} from "react";
-import ApiService from "../../ApiMainService";
 import {Button, Table, TableBody, TableCell, TableHead, TableRow, Typography} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ApiDevelopService from "../../ApiDevelopService";
+import ApiSalesService from "../../ApiSalesService";
 
 class UserListComponent extends Component{
     constructor(props) {
@@ -18,7 +17,7 @@ class UserListComponent extends Component{
         this.reloadUserList();
     }
     reloadUserList = () => {
-        ApiDevelopService.fetchUsers()
+        ApiSalesService.fetchUsers()
             .then( res => {
                 this.setState({
                     users: res.data
@@ -29,7 +28,7 @@ class UserListComponent extends Component{
             })
     }
     deleteUser = (userID) => {
-        ApiDevelopService.deleteUser(userID)
+        ApiSalesService.deleteUser(userID)
             .then( res => {
                 this.setState({
                         message: 'User Deleted Successfully.'
@@ -63,7 +62,7 @@ class UserListComponent extends Component{
                             <TableCell>ID</TableCell>
                             <TableCell>First Name</TableCell>
                             <TableCell align="right">Last Name</TableCell>
-                            <TableCell align="right">Depart</TableCell>
+                            <TableCell align="right">Job</TableCell>
                             <TableCell align="right">Edit</TableCell>
                             <TableCell align="right">Delete</TableCell>
                         </TableRow>
@@ -74,7 +73,7 @@ class UserListComponent extends Component{
                         <TableCell>{user.id}</TableCell>
                         <TableCell>{user.firstName}</TableCell>
                         <TableCell align="right">{user.lastName}</TableCell>
-                        <TableCell align="right">{user.employeeDepart}</TableCell>
+                        <TableCell align="right">{user.job}</TableCell>
                         <TableCell align="right" onClick={() => this.editUser(user.id)}>
                             <AddIcon/>
                         </TableCell>
