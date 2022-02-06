@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -17,7 +18,7 @@ public class Reward {
     private Long id;
     private String reason;
     private Long price;
-    private Instant date;
+    private LocalDate date;
 
     @JsonManagedReference
     @ManyToOne

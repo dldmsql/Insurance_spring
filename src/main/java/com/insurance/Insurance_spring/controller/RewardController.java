@@ -22,12 +22,17 @@ public class RewardController {
     public ResponseEntity createAccident(@RequestBody AccidentRequest request){
         return ResponseEntity.ok(rewardService.createAccident(request));
     }
+    @DeleteMapping("/accident/{accidentId}")
+    public ResponseEntity<Void> deleteAccident(@PathVariable Long accidentId){
+        rewardService.deleteAccident(accidentId);
+        return ResponseEntity.ok().build();
+    }
     @GetMapping("/accident/manage")
     public ResponseEntity<List<Accident>> readAccidents(){
         return ResponseEntity.ok(rewardService.readAccidents());
     }
     @PostMapping("/customer/{customerId}")
-    public ResponseEntity<Customer> readAccident(@PathVariable Long customerId){
+    public ResponseEntity<Accident> readAccident(@PathVariable Long customerId){
         return ResponseEntity.ok(rewardService.readAccident(customerId));
     }
     @PostMapping("/reward")

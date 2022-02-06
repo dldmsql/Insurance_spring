@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,7 @@ public class RewardService {
         Accident accident = new Accident();
         BeanUtils.copyProperties(request, accident);
         accident.setCustomer(customer.get());
+        accident.setDate(LocalDate.now());
         accident.setAccidentStatus(AccidentStatus.NONCOMPLETED);
         return accidentRepository.save(accident);
     }
@@ -53,8 +55,8 @@ public class RewardService {
     public List<Accident> readAccidents(){
         return accidentRepository.findByAccidentStatus(AccidentStatus.NONCOMPLETED);
     }
-    public Customer readAccident(Long id){
-        Optional<Accident> accident = accidentRepository.findById(id);
+    public Accident readAccident(Long id){
+        Optional<Accident> accident = accidentRepository.findByCustomerId(id);
         if(!accident.isPresent()){
             throw new EntityNotFoundException(
                     "Accident not present in the database"
@@ -67,7 +69,7 @@ public class RewardService {
                     "Customer doesn't have any Contract"
             );
         }
-        return customer;
+        return accident.get();
      }
      public Reward createReward( RewardRequest request ){
         Optional<Employee> employee = employeeRepository.findById(request.getEmployeeId());
@@ -82,14 +84,20 @@ public class RewardService {
                     "Accident not present in the database"
             );
         }
+        accident.get().setAccidentStatus(AccidentStatus.COMPLETED);
+
         Optional<Contract> contract = contractRepository.findById(request.getContractId());
 
         Reward reward = new Reward();
-         BeanUtils.copyProperties(request, reward);
+        BeanUtils.copyProperties(request, reward);
         reward.setAccident(accident.get());
         reward.setContract(contract.get());
         reward.setEmployee(employee.get());
-        reward.setDate(Instant.now());
+        reward.setDate(LocalDate.now());
         return rewardRepository.save(reward);
      }
+
+    public void deleteAccident(Long accidentId) {
+        accidentRepository.deleteById(accidentId);
+    }
 }

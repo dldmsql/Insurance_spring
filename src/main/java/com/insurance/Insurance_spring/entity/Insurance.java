@@ -23,7 +23,7 @@ public class Insurance {
     @Enumerated(EnumType.ORDINAL)
     private InsurancePermitted insurancePermitted;
     @Enumerated(EnumType.STRING)
-    private InsuranceType insuranceType; // 보험 유형
+    private InsuranceType type; // 보험 유형
 
     @JsonManagedReference
     @ManyToOne

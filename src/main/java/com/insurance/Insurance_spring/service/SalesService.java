@@ -2,6 +2,7 @@ package com.insurance.Insurance_spring.service;
 
 import com.insurance.Insurance_spring.entity.*;
 import com.insurance.Insurance_spring.repository.*;
+import com.insurance.Insurance_spring.request.ContractUpdateRequest;
 import com.insurance.Insurance_spring.request.CustomerCreationRequest;
 import com.insurance.Insurance_spring.request.InsuranceContractRequest;
 import com.insurance.Insurance_spring.request.InsuranceReadsRequest;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +55,7 @@ public class SalesService {
     public List<Insurance> readInsurances (InsuranceReadsRequest request){
         List<Insurance> insuranceList = new ArrayList<>();
         for (Insurance insurance : insuranceRepository.findAll()) {
-            if ( insurance.getInsuranceType() == request.getType() ){
+            if ( insurance.getType() == request.getType() ){
                 insuranceList.add(insurance);
             }
         }
@@ -70,8 +72,8 @@ public class SalesService {
         contract.setInsurance(insurance.get());
         contract.setEmployee(employee.get());
 
-        contract.setStartOn(Instant.now());
-        contract.setDueOn(Instant.now().plus(request.getDue(), ChronoUnit.YEARS));
+        contract.setStartOn(LocalDate.now());
+        contract.setDueOn(LocalDate.now().plusYears(request.getDue()));
 
         contractRepository.save(contract);
 
@@ -89,7 +91,7 @@ public class SalesService {
     public List<Contract> readContracts(){
         List<Contract> contractList = new ArrayList<>();
         for(Contract contract : contractRepository.findAll()){
-            if(contract.getDueOn().isAfter(Instant.now())){
+            if(contract.getDueOn().isAfter(LocalDate.now())){
                 contractList.add(contract);
             }
         }
@@ -97,7 +99,7 @@ public class SalesService {
     }
 
     // 연장
-    public Contract updateContract( Long id, Long due ){
+    public Contract updateContract( Long id, ContractUpdateRequest request ){
         Optional<Contract> optionalContract = contractRepository.findById(id);
         if(!optionalContract.isPresent()){
             throw new EntityNotFoundException(
@@ -105,7 +107,16 @@ public class SalesService {
             );
         }
             Contract contract = optionalContract.get();
-            contract.setDueOn(contract.getDueOn().plus(due, ChronoUnit.YEARS));
+            contract.setDueOn(contract.getDueOn().plusYears(request.getDue()));
+            if(contract.getEmployee().getId() != request.getEmployeeId()) {
+                Optional<Employee> optionalEmployee = employeeRepository.findById(request.getEmployeeId());
+                if (!optionalEmployee.isPresent()) {
+                    throw new EntityNotFoundException(
+                            "Employee not present in the database"
+                    );
+                }
+                contract.setEmployee(optionalEmployee.get());
+            }
             contractRepository.save(contract);
             return contract;
     }

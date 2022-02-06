@@ -1,5 +1,6 @@
 package com.insurance.Insurance_spring.controller;
 
+import com.insurance.Insurance_spring.request.ContractUpdateRequest;
 import com.insurance.Insurance_spring.request.CustomerCreationRequest;
 import com.insurance.Insurance_spring.service.SalesService;
 import com.insurance.Insurance_spring.entity.Contract;
@@ -44,7 +45,7 @@ public class SalesController {
         return ResponseEntity.ok(salesService.readContracts());
     }
     @PatchMapping("/contract/manage/{contractId}")
-    public ResponseEntity<Contract> updateContract (@RequestBody Long request, @PathVariable Long contractId) {
+    public ResponseEntity<Contract> updateContract (@PathVariable Long contractId, @RequestBody ContractUpdateRequest request ) {
         return ResponseEntity.ok(salesService.updateContract(contractId, request));
     }
     @DeleteMapping("/contract/manage/{contractId}")

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -16,8 +17,8 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Instant startOn;
-    private Instant dueOn;
+    private LocalDate startOn;
+    private LocalDate dueOn;
 
     @ManyToOne
     @JoinColumn(name = "insurance_id")

@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -19,8 +20,8 @@ public class Accident {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Instant accidentDate; // 발생 날짜
-    private Instant date; // 접수 날짜
+    private LocalDate accidentDate; // 발생 날짜
+    private LocalDate date; // 접수 날짜
     private String accidentPlace; // 사고 장소
     @Enumerated(EnumType.STRING)
     private AccidentType accidentType; // 사고 유형
